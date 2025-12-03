@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BasicArchitecture</string>
+    <string name="name">Имя</string>
+    <string name="surname">Фамилия</string>
+    <string name="birthday">Дата рождения (дд.мм.гггг)</string>
+    <string name="next_button">Далее</string>
+    <string name="country">Страна</string>
+    <string name="city">Город</string>
+    <string name="address">Адрес</string>
+    <string name="choose_interest">Выберите интересы:</string>
+</resources>
