@@ -45,7 +45,7 @@ class FirstFragment : Fragment() {
                 viewModel.saveAndProceed()
                 findNavController().navigate(R.id.action_firstFragment_to_secondFragment)
             } else {
-                // Показываем Toast с ошибкой если она есть
+                // Показываем Toast с ошибкой, если она есть
                 state.error?.let { error ->
                     Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
                 }
@@ -53,8 +53,17 @@ class FirstFragment : Fragment() {
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
+            var previousError: String? = null
             viewModel.uiState.collectLatest { state ->
                 binding.btnNext.isEnabled = state.isValid
+                
+                // Показываем Toast только если ошибка изменилась и дата полностью введена
+                if (state.birthDate.length == 10 && 
+                    state.error != null && 
+                    state.error != previousError) {
+                    Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
+                }
+                previousError = state.error
             }
         }
     }
@@ -95,14 +104,6 @@ class FirstFragment : Fragment() {
         override fun afterTextChanged(s: Editable?) {
             val text = s.toString()
             viewModel.onBirthDateChange(text)
-
-            // Проверяем полную дату и показываем Toast если есть ошибка
-            if (text.length == 10) {
-                val state = viewModel.uiState.value
-                if (!state.isValid && state.error != null) {
-                    Toast.makeText(context, state.error, Toast.LENGTH_SHORT).show()
-                }
-            }
         }
     }
 
