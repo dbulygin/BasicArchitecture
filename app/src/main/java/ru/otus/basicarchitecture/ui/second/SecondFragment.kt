@@ -92,8 +92,7 @@ class SecondFragment : Fragment() {
                 if (suggestions.isNotEmpty()) {
                     suggestionsAdapter.addAll(suggestions)
                     suggestionsAdapter.notifyDataSetChanged()
-                    
-                    // Показываем dropdown только если поле в фокусе и есть текст
+
                     // Используем post для отложенного показа, чтобы избежать конфликтов
                     binding.etAddress.post {
                         val hasFocus = binding.etAddress.hasFocus()

@@ -70,9 +70,6 @@ class SecondViewModel @Inject constructor(
 
     fun saveData(address: String) {
         // Сохраняем полный адрес в поле address
-        // Поля country и city оставляем пустыми, так как теперь используется одно объединенное поле
-        cache.country = ""
-        cache.city = ""
         cache.address = address
     }
 

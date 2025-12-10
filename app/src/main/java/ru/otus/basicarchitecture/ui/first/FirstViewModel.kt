@@ -5,9 +5,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import ru.otus.basicarchitecture.WizardCache
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,6 +14,11 @@ class FirstViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(FirstUiState())
     val uiState: StateFlow<FirstUiState> = _uiState
+
+    init {
+        // Вызываем валидацию при инициализации для установки начального состояния
+        validate()
+    }
 
     fun onFirstNameChange(value: String) {
         _uiState.value = _uiState.value.copy(firstName = value)
@@ -43,30 +45,13 @@ class FirstViewModel @Inject constructor(
             !isAdult(state.birthDate) -> "Возраст должен быть 18+"
             else -> null
         }
-        _uiState.value = _uiState.value.copy(error = error, isValid = error == null)
+        // isValid = true только если нет ошибки И дата либо пустая, либо полная и валидная
+        val isValid = error == null && (state.birthDate.isBlank() || state.birthDate.length == 10)
+        _uiState.value = _uiState.value.copy(error = error, isValid = isValid)
     }
 
     fun isAdult(birthDate: String): Boolean {
-        return try {
-            // Проверяем что дата полная
-            if (birthDate.length < 10) return true
-
-            val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            sdf.isLenient = false
-            val date = sdf.parse(birthDate) ?: return false
-
-            val birthCalendar = Calendar.getInstance().apply { time = date }
-            val currentCalendar = Calendar.getInstance()
-
-            var age = currentCalendar.get(Calendar.YEAR) - birthCalendar.get(Calendar.YEAR)
-            if (currentCalendar.get(Calendar.DAY_OF_YEAR) < birthCalendar.get(Calendar.DAY_OF_YEAR)) {
-                age--
-            }
-
-            age >= 18
-        } catch (e: Exception) {
-            false
-        }
+        return DateValidator.isAdult(birthDate)
     }
 
     fun saveAndProceed() {

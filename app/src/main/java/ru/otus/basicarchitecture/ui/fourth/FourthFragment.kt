@@ -34,8 +34,6 @@ class FourthFragment : Fragment() {
             Имя: ${cache.firstName}
             Фамилия: ${cache.lastName}
             Дата рождения: ${cache.birthDate}
-            Страна: ${cache.country}
-            Город: ${cache.city}
             Адрес: ${cache.address}
             Интересы: ${cache.interests.joinToString(", ")}
         """.trimIndent()

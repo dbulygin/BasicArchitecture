@@ -5,8 +5,6 @@
     <string name="surname">Surname</string>
     <string name="birthday">Birthdate (dd.mm.yyyy)</string>
     <string name="next_button">Next</string>
-    <string name="country">Country</string>
-    <string name="city">City</string>
     <string name="address">Address</string>
     <string name="choose_interest">Choose Interest:</string>
 </resources>
