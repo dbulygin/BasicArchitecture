@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.ui.fourth
+package ru.otus.basicarchitecture.ui.summary
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,20 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import ru.otus.basicarchitecture.R
-import ru.otus.basicarchitecture.databinding.FragmentFourthBinding
+import ru.otus.basicarchitecture.databinding.FragmentSummaryBinding
 
 @AndroidEntryPoint
-class FourthFragment : Fragment() {
-    private var _binding: FragmentFourthBinding? = null
+class SummaryFragment : Fragment() {
+    private var _binding: FragmentSummaryBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: FourthViewModel by viewModels()
+    private val viewModel: SummaryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFourthBinding.inflate(inflater, container, false)
+        _binding = FragmentSummaryBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,3 +43,4 @@ class FourthFragment : Fragment() {
         _binding = null
     }
 }
+

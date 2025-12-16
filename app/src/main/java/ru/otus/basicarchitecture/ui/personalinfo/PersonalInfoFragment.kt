@@ -1,5 +1,4 @@
-// FirstFragment.kt
-package ru.otus.basicarchitecture.ui.first
+package ru.otus.basicarchitecture.ui.personalinfo
 
 import android.os.Bundle
 import android.text.Editable
@@ -16,34 +15,36 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.R
-import ru.otus.basicarchitecture.databinding.FragmentFirstBinding
+import ru.otus.basicarchitecture.databinding.FragmentPersonalInfoBinding
 
 @AndroidEntryPoint
-class FirstFragment : Fragment() {
-    private var _binding: FragmentFirstBinding? = null
+class PersonalInfoFragment : Fragment() {
+    private var _binding: FragmentPersonalInfoBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: FirstViewModel by viewModels()
+    private val viewModel: PersonalInfoViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFirstBinding.inflate(inflater, container, false)
+        _binding = FragmentPersonalInfoBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Настраиваем слушатели изменения текста для полей ввода
         binding.etFirstName.addTextChangedListener(textWatcher { viewModel.onFirstNameChange(it) })
         binding.etLastName.addTextChangedListener(textWatcher { viewModel.onLastNameChange(it) })
         binding.etBirthDate.addTextChangedListener(dateTextWatcher())
 
+        // Обработчик нажатия кнопки "Далее"
         binding.btnNext.setOnClickListener {
             val state = viewModel.uiState.value
             if (state.isValid) {
                 viewModel.saveAndProceed()
-                findNavController().navigate(R.id.action_firstFragment_to_secondFragment)
+                findNavController().navigate(R.id.action_personalInfoFragment_to_addressFragment)
             } else {
                 // Показываем Toast с ошибкой, если она есть
                 state.error?.let { error ->
@@ -52,6 +53,7 @@ class FirstFragment : Fragment() {
             }
         }
 
+        // Подписка на изменения состояния UI
         viewLifecycleOwner.lifecycleScope.launch {
             var previousError: String? = null
             viewModel.uiState.collectLatest { state ->
@@ -68,6 +70,9 @@ class FirstFragment : Fragment() {
         }
     }
 
+    /**
+     * Создает TextWatcher для обработки изменений текста
+     */
     private fun textWatcher(onChange: (String) -> Unit) = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -76,6 +81,10 @@ class FirstFragment : Fragment() {
         }
     }
 
+    /**
+     * Создает TextWatcher для поля даты рождения
+     * Автоматически форматирует ввод в формат DD.MM.YYYY
+     */
     private fun dateTextWatcher() = object : TextWatcher {
         private var isUpdating = false
 
@@ -84,6 +93,7 @@ class FirstFragment : Fragment() {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             if (isUpdating) return
 
+            // Удаляем точки и форматируем ввод
             val input = s.toString().replace(".", "")
             if (input.length > 8) return
 
@@ -104,6 +114,7 @@ class FirstFragment : Fragment() {
         override fun afterTextChanged(s: Editable?) {
             val text = s.toString()
             viewModel.onBirthDateChange(text)
+            // Toast показывается через подписку на uiState в onViewCreated
         }
     }
 
@@ -112,3 +123,4 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 }
+

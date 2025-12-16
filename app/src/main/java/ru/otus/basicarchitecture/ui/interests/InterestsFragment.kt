@@ -1,5 +1,4 @@
-// ThirdFragment.kt
-package ru.otus.basicarchitecture.ui.third
+package ru.otus.basicarchitecture.ui.interests
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,19 +10,19 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 import ru.otus.basicarchitecture.R
-import ru.otus.basicarchitecture.databinding.FragmentThirdBinding
+import ru.otus.basicarchitecture.databinding.FragmentInterestsBinding
 
 @AndroidEntryPoint
-class ThirdFragment : Fragment() {
-    private var _binding: FragmentThirdBinding? = null
+class InterestsFragment : Fragment() {
+    private var _binding: FragmentInterestsBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ThirdViewModel by viewModels()
+    private val viewModel: InterestsViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentThirdBinding.inflate(inflater, container, false)
+        _binding = FragmentInterestsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -40,12 +39,13 @@ class ThirdFragment : Fragment() {
             binding.chipGroup.addView(chip)
         }
 
+        // Обработчик нажатия кнопки "Далее"
         binding.btnNext.setOnClickListener {
             val selectedInterests = binding.chipGroup.checkedChipIds.mapNotNull {
                 binding.chipGroup.findViewById<Chip>(it)?.text?.toString()
             }
             viewModel.savedInterests(selectedInterests)
-            findNavController().navigate(R.id.action_thirdFragment_to_fourthFragment)
+            findNavController().navigate(R.id.action_interestsFragment_to_summaryFragment)
         }
     }
 
@@ -54,3 +54,4 @@ class ThirdFragment : Fragment() {
         _binding = null
     }
 }
+

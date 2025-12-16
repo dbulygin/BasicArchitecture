@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.ui.second
+package ru.otus.basicarchitecture.ui.address
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -15,7 +15,7 @@ import ru.otus.basicarchitecture.network.dadata.DadataRequest
 import javax.inject.Inject
 
 @HiltViewModel
-class SecondViewModel @Inject constructor(
+class AddressViewModel @Inject constructor(
     private val cache: WizardCache,
     private val dadataApi: DadataApi
 ) : ViewModel() {
@@ -45,7 +45,7 @@ class SecondViewModel @Inject constructor(
         val currentQuery = query.trim()
         searchJob = viewModelScope.launch {
             try {
-                delay(500) // Задержка 300мс для debounce
+                delay(500) // Задержка 500мс для debounce
 
                 // Выполняем запрос к API Дадата
                 val response = dadataApi.getAddressSuggestions(
@@ -68,8 +68,10 @@ class SecondViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Сохранение адреса в кеш
+     */
     fun saveData(address: String) {
-        // Сохраняем полный адрес в поле address
         cache.address = address
     }
 
@@ -79,3 +81,4 @@ class SecondViewModel @Inject constructor(
         searchJob?.cancel()
     }
 }
+

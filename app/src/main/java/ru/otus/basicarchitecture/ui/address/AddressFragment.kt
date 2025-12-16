@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.ui.second
+package ru.otus.basicarchitecture.ui.address
 
 import android.os.Bundle
 import android.text.Editable
@@ -16,13 +16,13 @@ import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import ru.otus.basicarchitecture.R
-import ru.otus.basicarchitecture.databinding.FragmentSecondBinding
+import ru.otus.basicarchitecture.databinding.FragmentAddressBinding
 
 @AndroidEntryPoint
-class SecondFragment : Fragment() {
-    private var _binding: FragmentSecondBinding? = null
+class AddressFragment : Fragment() {
+    private var _binding: FragmentAddressBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: SecondViewModel by viewModels()
+    private val viewModel: AddressViewModel by viewModels()
     
     // Адаптер для отображения подсказок в AutoCompleteTextView
     private lateinit var suggestionsAdapter: ArrayAdapter<String>
@@ -31,7 +31,7 @@ class SecondFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSecondBinding.inflate(inflater, container, false)
+        _binding = FragmentAddressBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -148,11 +148,12 @@ class SecondFragment : Fragment() {
             }
         }
 
+        // Обработчик нажатия кнопки "Далее"
         binding.btnNext.setOnClickListener {
             val address = binding.etAddress.text.toString()
 
             viewModel.saveData(address)
-            findNavController().navigate(R.id.action_secondFragment_to_thirdFragment)
+            findNavController().navigate(R.id.action_addressFragment_to_interestsFragment)
         }
     }
 
@@ -161,3 +162,4 @@ class SecondFragment : Fragment() {
         _binding = null
     }
 }
+

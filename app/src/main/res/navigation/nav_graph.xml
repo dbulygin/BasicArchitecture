@@ -2,38 +2,38 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/firstFragment">
+    app:startDestination="@id/personalInfoFragment">
 
     <fragment
-        android:id="@+id/firstFragment"
-        android:name="ru.otus.basicarchitecture.ui.first.FirstFragment"
-        android:label="FirstFragment" >
+        android:id="@+id/personalInfoFragment"
+        android:name="ru.otus.basicarchitecture.ui.personalinfo.PersonalInfoFragment"
+        android:label="PersonalInfoFragment" >
         <action
-            android:id="@+id/action_firstFragment_to_secondFragment"
-            app:destination="@id/secondFragment" />
+            android:id="@+id/action_personalInfoFragment_to_addressFragment"
+            app:destination="@id/addressFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="ru.otus.basicarchitecture.ui.second.SecondFragment"
-        android:label="SecondFragment" >
+        android:id="@+id/addressFragment"
+        android:name="ru.otus.basicarchitecture.ui.address.AddressFragment"
+        android:label="AddressFragment" >
         <action
-            android:id="@+id/action_secondFragment_to_thirdFragment"
-            app:destination="@id/thirdFragment" />
+            android:id="@+id/action_addressFragment_to_interestsFragment"
+            app:destination="@id/interestsFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/thirdFragment"
-        android:name="ru.otus.basicarchitecture.ui.third.ThirdFragment"
-        android:label="ThirdFragment" >
+        android:id="@+id/interestsFragment"
+        android:name="ru.otus.basicarchitecture.ui.interests.InterestsFragment"
+        android:label="InterestsFragment" >
         <action
-            android:id="@+id/action_thirdFragment_to_fourthFragment"
-            app:destination="@id/fourthFragment" />
+            android:id="@+id/action_interestsFragment_to_summaryFragment"
+            app:destination="@id/summaryFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/fourthFragment"
-        android:name="ru.otus.basicarchitecture.ui.fourth.FourthFragment"
-        android:label="FourthFragment" />
+        android:id="@+id/summaryFragment"
+        android:name="ru.otus.basicarchitecture.ui.summary.SummaryFragment"
+        android:label="SummaryFragment" />
 
 </navigation>

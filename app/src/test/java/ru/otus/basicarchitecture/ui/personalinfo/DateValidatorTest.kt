@@ -1,13 +1,10 @@
-package ru.otus.basicarchitecture.ui.first
+package ru.otus.basicarchitecture.ui.personalinfo
 
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.util.Calendar
 
-/**
- * Unit-тесты для функции валидации даты рождения
- */
 class DateValidatorTest {
 
     @Test
@@ -64,3 +61,4 @@ class DateValidatorTest {
         assertTrue(result)
     }
 }
+

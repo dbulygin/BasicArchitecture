@@ -1,4 +1,4 @@
-package ru.otus.basicarchitecture.ui.first
+package ru.otus.basicarchitecture.ui.personalinfo
 
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -9,10 +9,11 @@ import java.util.Locale
  * Вынесен в отдельный класс для удобства тестирования
  */
 object DateValidator {
-     // Проверяет, является ли пользователь совершеннолетним
+    /**
+     * Проверяет, является ли пользователь совершеннолетним
+     */
     fun isAdult(birthDate: String): Boolean {
         return try {
-            // Проверяем что дата полная
             if (birthDate.length < 10) return true
 
             val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
